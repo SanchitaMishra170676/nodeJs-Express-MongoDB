@@ -1,5 +1,7 @@
 const fs = require ('fs');
 const http = require('http');
+const url = require('url');
+
 // const textIn = fs.readFileSync('./txt/input.txt', 'utf-8');
 
 // const opt = `This is what we know about avocado : ${textIn} \n ${Date.now()}`;
@@ -28,7 +30,23 @@ const http = require('http');
 
 //Server
 const server = http.createServer(
-    (req, res) => { res.end('Hello Aditya !');}
+    (req, res) => { 
+        const pathName = req.url;
+
+        if (pathName === '/' || pathName === '/overview')
+        res.end('This is over view');
+        else if (pathName === '/product')
+        res.end('This is product');
+        else {
+            res.writeHead(404, {
+                'Content-Type' : 'text/html'
+            });
+
+            res.end('<h1> Page not found </h1>');
+        }
+
+
+    }
 );
 
 
