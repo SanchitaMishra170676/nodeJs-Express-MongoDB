@@ -29,6 +29,9 @@ const url = require('url');
 
 
 //Server
+
+const dataObj = fs.readFileSync(`${__dirname}/dev-data/data.json`, 'utf-8');
+const productData = JSON.parse(dataObj);
 const server = http.createServer(
     (req, res) => { 
         const pathName = req.url;
@@ -37,6 +40,15 @@ const server = http.createServer(
         res.end('This is over view');
         else if (pathName === '/product')
         res.end('This is product');
+
+        else if(pathName === '/api'){
+            
+            res.writeHead (200,
+                {'Content-type' : 'application/json' } );
+
+            res.end(dataObj);    
+
+        }
         else {
             res.writeHead(404, {
                 'Content-Type' : 'text/html'
